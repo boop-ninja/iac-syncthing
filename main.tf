@@ -84,16 +84,14 @@ resource "kubernetes_ingress" "i" {
           path = "/"
           backend {
             service_name = kubernetes_service.i_web.metadata[0].name
-            service_port = "web"
+            service_port = 80
           }
         }
       }
     }
 
-
     tls {
       hosts       = [local.domain_name]
-      secret_name = var.namespace
     }
   }
 }
