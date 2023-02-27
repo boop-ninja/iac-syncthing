@@ -77,21 +77,20 @@ resource "kubernetes_ingress" "i" {
     }
   }
   spec {
+    ingress_class_name = "traefik"
+    tls {
+      hosts = [local.domain_name]
+    }
     rule {
       host = local.domain_name
       http {
         path {
-          path = "/"
           backend {
             service_name = kubernetes_service.i_web.metadata[0].name
-            service_port = 80
+            service_port = kubernetes_service.i_web.spec[0].port[0].name
           }
         }
       }
-    }
-
-    tls {
-      hosts       = [local.domain_name]
     }
   }
 }
