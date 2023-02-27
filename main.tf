@@ -19,6 +19,7 @@ resource "kubernetes_namespace" "i" {
 ##################################################################
 
 resource "kubernetes_persistent_volume_claim" "i" {
+  depends_on = [kubernetes_namespace.i]
   metadata {
     name      = "${local.app_name}-pv-claim"
     namespace = var.namespace
@@ -40,6 +41,7 @@ resource "kubernetes_persistent_volume_claim" "i" {
 ##################################################################
 
 resource "kubernetes_service" "i_web" {
+  depends_on = [kubernetes_deployment.i]
   metadata {
     name      = "${local.app_name}-web"
     namespace = var.namespace
@@ -64,6 +66,7 @@ resource "kubernetes_service" "i_web" {
 
 
 resource "kubernetes_ingress" "i" {
+  depends_on = [kubernetes_service.i_web]
   metadata {
     name      = "${local.app_name}-ingress"
     namespace = var.namespace
