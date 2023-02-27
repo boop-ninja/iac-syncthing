@@ -89,6 +89,8 @@ resource "kubernetes_ingress" "i" {
         }
       }
     }
+
+
     tls {
       hosts       = [local.domain_name]
       secret_name = var.namespace
