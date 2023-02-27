@@ -90,7 +90,7 @@ resource "kubernetes_ingress_v1" "i" {
             service {
               name = kubernetes_service.i_web.metadata[0].name
               port {
-                number = kubernetes_service.i_web.spec[0].port[0].name
+                number = kubernetes_service.i_web.spec[0].port[0].port
               }
             }
           }
