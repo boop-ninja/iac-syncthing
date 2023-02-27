@@ -29,7 +29,7 @@ resource "kubernetes_deployment" "i" {
           command = [
             "sh",
             "-c",
-            "mkdir -p /var/syncthing && syncthing generate --home /var/syncthing/config --gui-user=${var.username} --gui-password=${var.password}"
+            "mkdir -p /var/syncthing && chown -R 1000:1000 /var/syncthing && syncthing generate --home /var/syncthing/config --gui-user=${var.username} --gui-password=${var.password}"
           ]
 
           volume_mount {
@@ -51,6 +51,16 @@ resource "kubernetes_deployment" "i" {
               cpu    = "250m"
               memory = "256Mi"
             }
+          }
+
+          env {
+            name = "PUID"
+            value = "1000"
+          }
+
+          env {
+            name = "PGID"
+            value = "1000"
           }
 
           port {
