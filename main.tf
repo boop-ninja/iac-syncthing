@@ -74,25 +74,21 @@ resource "kubernetes_ingress" "i" {
     }
   }
   spec {
-    tls {
-      hosts = [local.domain_name]
-    }
     rule {
       host = local.domain_name
       http {
         path {
-          path      = "/"
-          path_type = "Prefix"
+          path = "/"
           backend {
-            service {
-              name = kubernetes_service.i_web.metadata[0].name
-              port {
-                number = 80
-              }
-            }
+            service_name = kubernetes_service.i_web.metadata[0].name
+            service_port = "web"
           }
         }
       }
+    }
+    tls {
+      hosts       = [local.domain_name]
+      secret_name = var.namespace
     }
   }
 }

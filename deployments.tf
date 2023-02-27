@@ -23,8 +23,8 @@ resource "kubernetes_deployment" "i" {
 
       spec {
         init_container {
-          name = "${var.namespace}-init"
-          image = "syncthing/syncthing"
+          name              = "${var.namespace}-init"
+          image             = "syncthing/syncthing"
           image_pull_policy = "Always"
           command = [
             "sh",
