@@ -65,7 +65,7 @@ resource "kubernetes_service" "i_web" {
 ##################################################################
 
 
-resource "kubernetes_ingress" "i" {
+resource "kubernetes_ingress_v1" "i" {
   depends_on = [kubernetes_service.i_web]
   metadata {
     name      = "${local.app_name}-ingress"
@@ -85,9 +85,14 @@ resource "kubernetes_ingress" "i" {
       host = local.domain_name
       http {
         path {
+
           backend {
-            service_name = kubernetes_service.i_web.metadata[0].name
-            service_port = kubernetes_service.i_web.spec[0].port[0].name
+            service {
+              name = kubernetes_service.i_web.metadata[0].name
+              port {
+                number = kubernetes_service.i_web.spec[0].port[0].name
+              }
+            }
           }
         }
       }
