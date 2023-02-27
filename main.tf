@@ -72,7 +72,6 @@ resource "kubernetes_ingress_v1" "i" {
     namespace = var.namespace
     labels    = local.common_labels
     annotations = {
-      "kubernetes.io/ingress.class"    = "traefik"
       "cert-manager.io/cluster-issuer" = "letsencrypt-prod"
     }
   }
