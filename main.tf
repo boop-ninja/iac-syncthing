@@ -63,7 +63,7 @@ resource "kubernetes_service" "i_web" {
 ##################################################################
 
 
-resource "kubernetes_ingress" "i" {
+resource "kubernetes_ingress_v1" "i" {
   metadata {
     name      = "${local.app_name}-ingress"
     namespace = var.namespace
