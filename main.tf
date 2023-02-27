@@ -20,7 +20,7 @@ resource "kubernetes_namespace" "i" {
 
 resource "kubernetes_persistent_volume_claim" "i" {
   metadata {
-    name      = "${var.namespace}-pv-claim"
+    name      = "${local.app_name}-pv-claim"
     namespace = var.namespace
     labels    = local.common_labels
   }
@@ -41,7 +41,7 @@ resource "kubernetes_persistent_volume_claim" "i" {
 
 resource "kubernetes_service" "i_web" {
   metadata {
-    name      = "${var.namespace}-web"
+    name      = "${local.app_name}-web"
     namespace = var.namespace
     labels    = local.common_labels
   }
@@ -65,7 +65,7 @@ resource "kubernetes_service" "i_web" {
 
 resource "kubernetes_ingress" "i" {
   metadata {
-    name      = var.namespace
+    name      = "${local.app_name}-ingress"
     namespace = var.namespace
     labels    = local.common_labels
     annotations = {
